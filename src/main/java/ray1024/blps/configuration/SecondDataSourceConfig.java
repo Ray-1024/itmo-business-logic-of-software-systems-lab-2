@@ -1,4 +1,4 @@
-package ray1024.blss.lab2.configuration;
+package ray1024.blps.configuration;
 
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableJpaRepositories(
-        basePackages = {"ray1024.blss.lab2.repository"},
+        basePackages = {"ray1024.blps.repository.second"},
         entityManagerFactoryRef = "secondEntityManagerFactory",
         transactionManagerRef = "secondTransactionManager"
 )
@@ -25,8 +25,8 @@ public class SecondDataSourceConfig {
             EntityManagerFactoryBuilder builder, @Qualifier("secondDataSource") DataSource dataSource) {
         return builder
                 .dataSource(dataSource)
-                .packages("com.example.second.domain")
-                .persistenceUnit("secondDb")
+                .packages("ray1024.blps.repository.second")
+                .persistenceUnit("secondDataSource")
                 .build();
     }
 

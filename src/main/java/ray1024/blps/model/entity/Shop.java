@@ -1,4 +1,4 @@
-package ray1024.blss.lab2.model.entity;
+package ray1024.blps.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -10,11 +10,10 @@ import lombok.NoArgsConstructor;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
+@Entity(name = "shop")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "shops", uniqueConstraints = {@UniqueConstraint(columnNames = {"address"})})
 public class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,15 +21,14 @@ public class Shop {
 
     @NotBlank
     @Size(min = 1, max = 64)
-    @Column(name = "name")
+    @Column(unique = true)
     private String name;
 
     @NotBlank
     @Size(min = 1, max = 256)
-    @Column(name = "address")
     private String address;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinTable(name = "shop_item", joinColumns = @JoinColumn(name = "shop_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
-    private Set<Item> items = new HashSet<>();
+    @JoinTable(name = "shop_itemstack", joinColumns = @JoinColumn(name = "shop_id"), inverseJoinColumns = @JoinColumn(name = "itemstack_id"))
+    private Set<ItemStack> itemStacks = new HashSet<>();
 }

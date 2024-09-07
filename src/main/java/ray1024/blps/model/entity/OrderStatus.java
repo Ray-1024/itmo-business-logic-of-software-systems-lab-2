@@ -1,15 +1,14 @@
-package ray1024.blss.lab2.model.entity;
+package ray1024.blps.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Entity(name = "orderstatus")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "orderstatus")
 public class OrderStatus {
     public enum Status {
         ORDERED, PACKING, PACKED, DELIVERING, DELIVERED
@@ -17,10 +16,8 @@ public class OrderStatus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "name", length = 16)
     private Status name;
 }

@@ -1,12 +1,10 @@
-package ray1024.blss.lab2.configuration;
+package ray1024.blps.configuration;
 
+import com.atomikos.jdbc.AtomikosDataSourceBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-
-import javax.sql.DataSource;
 
 @Configuration
 public class DataSourceConfig {
@@ -14,14 +12,14 @@ public class DataSourceConfig {
     @Primary
     @Bean(name = "firstDataSource")
     @ConfigurationProperties(prefix = "spring.datasource.first")
-    public DataSource firstDataSource() {
-        return DataSourceBuilder.create().build();
+    public AtomikosDataSourceBean firstDataSource() {
+        return new AtomikosDataSourceBean();
     }
 
     @Bean(name = "secondDataSource")
     @ConfigurationProperties(prefix = "spring.datasource.second")
-    public DataSource secondDataSource() {
-        return DataSourceBuilder.create().build();
+    public AtomikosDataSourceBean secondDataSource() {
+        return new AtomikosDataSourceBean();
     }
 }
 
