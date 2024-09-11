@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.jta.JtaTransactionManager;
 import org.springframework.web.bind.annotation.*;
 import ray1024.blps.model.entity.Order;
 import ray1024.blps.model.entity.Role;
@@ -29,10 +28,10 @@ public class UserController {
     @PostMapping("/{userId}/client")
     public ResponseEntity addClientRole(@PathVariable Long userId) {
         Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty() || user.get().getRoles().stream().anyMatch(role -> role.getName().equals(Role.RoleEnum.ROLE_CLIENT))) {
+        if (user.isEmpty() || user.get().getRoles().stream().anyMatch(role -> role.getName().equals(Role.RoleEnum.CLIENT))) {
             return ResponseEntity.badRequest().build();
         }
-        Optional<Role> clientRole = roleRepository.findByName(Role.RoleEnum.ROLE_CLIENT);
+        Optional<Role> clientRole = roleRepository.findByName(Role.RoleEnum.CLIENT);
         user.get().getRoles().add(clientRole.get());
         userRepository.save(user.get());
         return ResponseEntity.ok(user.get());
@@ -42,10 +41,10 @@ public class UserController {
     @PreAuthorize("hasRole('ROLE_CLIENT')")
     public ResponseEntity deleteClientRole(@PathVariable Long userId) {
         Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty() || user.get().getRoles().stream().noneMatch(role -> role.getName().equals(Role.RoleEnum.ROLE_CLIENT))) {
+        if (user.isEmpty() || user.get().getRoles().stream().noneMatch(role -> role.getName().equals(Role.RoleEnum.CLIENT))) {
             return ResponseEntity.badRequest().build();
         }
-        Optional<Role> clientRole = roleRepository.findByName(Role.RoleEnum.ROLE_CLIENT);
+        Optional<Role> clientRole = roleRepository.findByName(Role.RoleEnum.CLIENT);
         user.get().getRoles().remove(clientRole.get());
         userRepository.save(user.get());
         return ResponseEntity.ok(user.get());
@@ -65,10 +64,10 @@ public class UserController {
     @PostMapping("{userId}/courier")
     public ResponseEntity addCourierRole(@PathVariable Long userId) {
         Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty() || user.get().getRoles().stream().anyMatch(role -> role.getName().equals(Role.RoleEnum.ROLE_COURIER))) {
+        if (user.isEmpty() || user.get().getRoles().stream().anyMatch(role -> role.getName().equals(Role.RoleEnum.COURIER))) {
             return ResponseEntity.badRequest().build();
         }
-        Optional<Role> clientRole = roleRepository.findByName(Role.RoleEnum.ROLE_COURIER);
+        Optional<Role> clientRole = roleRepository.findByName(Role.RoleEnum.COURIER);
         user.get().getRoles().add(clientRole.get());
         userRepository.save(user.get());
         return ResponseEntity.ok(user.get());
@@ -77,10 +76,10 @@ public class UserController {
     @DeleteMapping("/{userId}/courier")
     public ResponseEntity deleteCourierRole(@PathVariable Long userId) {
         Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty() || user.get().getRoles().stream().noneMatch(role -> role.getName().equals(Role.RoleEnum.ROLE_COURIER))) {
+        if (user.isEmpty() || user.get().getRoles().stream().noneMatch(role -> role.getName().equals(Role.RoleEnum.COURIER))) {
             return ResponseEntity.badRequest().build();
         }
-        Optional<Role> clientRole = roleRepository.findByName(Role.RoleEnum.ROLE_COURIER);
+        Optional<Role> clientRole = roleRepository.findByName(Role.RoleEnum.COURIER);
         user.get().getRoles().remove(clientRole.get());
         userRepository.save(user.get());
         return ResponseEntity.ok(user.get());
@@ -97,10 +96,10 @@ public class UserController {
     @PostMapping("{userId}/packer")
     public ResponseEntity addPackerRole(@PathVariable Long userId) {
         Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty() || user.get().getRoles().stream().anyMatch(role -> role.getName().equals(Role.RoleEnum.ROLE_PACKER))) {
+        if (user.isEmpty() || user.get().getRoles().stream().anyMatch(role -> role.getName().equals(Role.RoleEnum.PACKER))) {
             return ResponseEntity.badRequest().build();
         }
-        Optional<Role> clientRole = roleRepository.findByName(Role.RoleEnum.ROLE_PACKER);
+        Optional<Role> clientRole = roleRepository.findByName(Role.RoleEnum.PACKER);
         user.get().getRoles().add(clientRole.get());
         userRepository.save(user.get());
         return ResponseEntity.ok(user.get());
@@ -109,10 +108,10 @@ public class UserController {
     @DeleteMapping("/{userId}/packer")
     public ResponseEntity deletePackerRole(@PathVariable Long userId) {
         Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty() || user.get().getRoles().stream().noneMatch(role -> role.getName().equals(Role.RoleEnum.ROLE_PACKER))) {
+        if (user.isEmpty() || user.get().getRoles().stream().noneMatch(role -> role.getName().equals(Role.RoleEnum.PACKER))) {
             return ResponseEntity.badRequest().build();
         }
-        Optional<Role> clientRole = roleRepository.findByName(Role.RoleEnum.ROLE_PACKER);
+        Optional<Role> clientRole = roleRepository.findByName(Role.RoleEnum.PACKER);
         user.get().getRoles().remove(clientRole.get());
         userRepository.save(user.get());
         return ResponseEntity.ok(user.get());

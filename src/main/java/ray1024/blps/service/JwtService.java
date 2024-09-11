@@ -2,7 +2,6 @@ package ray1024.blps.service;
 
 
 import io.jsonwebtoken.*;
-import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-@AllArgsConstructor
 public class JwtService {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtService.class);
@@ -20,7 +18,7 @@ public class JwtService {
     @Value("${jwt.secret.key}")
     private String jwtSecret;
 
-    @Value("${jwt.token.expire_time}")
+    @Value("${jwt.token.expire-time}")
     private int jwtExpirationMs;
 
     public String generate(UserDetails user) {

@@ -18,7 +18,7 @@ public class Role implements GrantedAuthority {
     }
 
     public enum RoleEnum {
-        ROLE_CLIENT, ROLE_PACKER, ROLE_COURIER
+        CLIENT, PACKER, COURIER
     }
 
     @Id
