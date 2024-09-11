@@ -5,10 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "orderstatus")
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Table(name = "orderstatuses")
 public class OrderStatus {
     public enum Status {
         ORDERED, PACKING, PACKED, DELIVERING, DELIVERED

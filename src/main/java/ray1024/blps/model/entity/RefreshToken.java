@@ -8,10 +8,11 @@ import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 
-@Entity(name = "refreshtoken")
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Table(name = "refreshtokens")
 public class RefreshToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

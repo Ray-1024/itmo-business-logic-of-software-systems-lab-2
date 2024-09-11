@@ -6,15 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
-@Entity(name = "role")
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Table(name = "roles")
 public class Role implements GrantedAuthority {
 
     @Override
     public String getAuthority() {
-        return name.name();
+        return "ROLE_" + name.name();
     }
 
     public enum RoleEnum {

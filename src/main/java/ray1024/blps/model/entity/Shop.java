@@ -2,7 +2,6 @@ package ray1024.blps.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,22 +9,22 @@ import lombok.NoArgsConstructor;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name = "shop")
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Table(name = "shops")
 public class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
-    @Size(min = 1, max = 64)
-    @Column(unique = true)
+    @Column(nullable = false)
     private String name;
 
     @NotBlank
-    @Size(min = 1, max = 256)
+    @Column(nullable = false)
     private String address;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
