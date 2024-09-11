@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ray1024.blps.model.entity.Shop;
-import ray1024.blps.repository.first.ShopRepository;
+import ray1024.blps.repository.ShopRepository;
 
 import java.util.Optional;
 

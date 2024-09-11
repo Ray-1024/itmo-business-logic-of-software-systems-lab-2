@@ -4,12 +4,18 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 
 @Entity(name = "role")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Role {
+public class Role implements GrantedAuthority {
+
+    @Override
+    public String getAuthority() {
+        return name.name();
+    }
 
     public enum RoleEnum {
         ROLE_CLIENT, ROLE_PACKER, ROLE_COURIER
