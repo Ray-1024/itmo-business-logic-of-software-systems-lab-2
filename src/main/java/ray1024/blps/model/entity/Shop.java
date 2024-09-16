@@ -28,6 +28,6 @@ public class Shop {
     private String address;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinTable(name = "shop_itemstack", joinColumns = @JoinColumn(name = "shop_id"), inverseJoinColumns = @JoinColumn(name = "itemstack_id"))
-    private Set<ItemStack> itemStacks = new HashSet<>();
+    @JoinTable(name = "shop_item", joinColumns = @JoinColumn(name = "shop_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
+    private Set<Item> items = new HashSet<>();
 }

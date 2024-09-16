@@ -1,49 +1,30 @@
 package ray1024.blps.controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import ray1024.blps.exception.UserAlreadyExistsException;
 import ray1024.blps.model.entity.Role;
-import ray1024.blps.model.entity.User;
-import ray1024.blps.model.request.AuthRequestDto;
-import ray1024.blps.repository.UserRepository;
-
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Optional;
+import ray1024.blps.model.request.RefreshTokenRequest;
+import ray1024.blps.model.request.SignUpRequest;
+import ray1024.blps.model.response.TokenResponse;
+import ray1024.blps.service.AuthService;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/auth")
 public class AuthController {
-    UserRepository userRepository;
+    private final AuthService authService;
 
-    @PostMapping("/singup")
-    public ResponseEntity create(@RequestBody AuthRequestDto signupRequest) {
-        Optional<User> user = userRepository.findByUsername(signupRequest.getUsername());
-        if (user.isPresent()) return ResponseEntity.badRequest().build();
-        return ResponseEntity.ok(userRepository.save(new User(0L, signupRequest.getUsername(), signupRequest.getPassword(), new HashSet<Role>())));
+    @PostMapping("/api/auth")
+    public TokenResponse signUp(@RequestBody SignUpRequest signupRequest) throws UserAlreadyExistsException {
+        return authService.signUp(signupRequest.getUsername(), signupRequest.getPassword(), Role.valueOf(signupRequest.getRole()));
     }
 
-
-    @PutMapping("/signin")
-    public ResponseEntity login(@RequestBody AuthRequestDto signinRequest) {
-        Optional<User> user = userRepository.findByUsername(signinRequest.getUsername());
-        if (user.isEmpty() || !Objects.equals(user.get().getPassword(), signinRequest.getPassword()))
-            return ResponseEntity.badRequest().build();
-        return ResponseEntity.ok("success");
-    }
-
-    @PutMapping("/logout")
-    public ResponseEntity logout() {
-        return ResponseEntity.ok("success");
-    }
-
-    @DeleteMapping("/takeout")
-    public ResponseEntity takeout(@RequestBody User user) {
-        if (userRepository.findByUsername(user.getUsername()).isEmpty()) return ResponseEntity.badRequest().build();
-        userRepository.delete(userRepository.findByUsername(user.getUsername()).get());
-        return ResponseEntity.ok("success");
+    @PutMapping("/api/auth/token")
+    public TokenResponse refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
+        return authService.refresh(refreshTokenRequest.getToken());
     }
 }
 

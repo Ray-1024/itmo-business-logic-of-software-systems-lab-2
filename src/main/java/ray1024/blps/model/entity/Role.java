@@ -1,31 +1,26 @@
 package ray1024.blps.model.entity;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-@Entity
+import java.util.Set;
+
 @AllArgsConstructor
-@NoArgsConstructor
-@Data
-@Table(name = "roles")
-public class Role implements GrantedAuthority {
+@Getter
+public enum Role {
+    CLIENT(Set.of(new SimpleGrantedAuthority(Authority.CREATE_ORDER.name()))),
+    PACKER(Set.of(new SimpleGrantedAuthority(Authority.SEARCH_ORDER.name())
+            , new SimpleGrantedAuthority(Authority.CHANGE_ORDER.name()))),
+    COURIER(Set.of(new SimpleGrantedAuthority(Authority.SEARCH_ORDER.name())
+            , new SimpleGrantedAuthority(Authority.CHANGE_ORDER.name())));
 
-    @Override
-    public String getAuthority() {
-        return "ROLE_" + name.name();
+    private final Set<GrantedAuthority> authorities;
+
+    public enum Authority {
+        CREATE_ORDER,
+        SEARCH_ORDER,
+        CHANGE_ORDER
     }
-
-    public enum RoleEnum {
-        CLIENT, PACKER, COURIER
-    }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Enumerated(EnumType.STRING)
-    private RoleEnum name;
 }
